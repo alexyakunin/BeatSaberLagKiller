@@ -14,20 +14,20 @@
     <text text='Performance Statistics' font-size='5' align="Center"/>
   </horizontal>
   <horizontal>
-    <text text="Lag frequency" align="Left" />
-    <text text="~lag-frequency" align="Right" />
+    <text text="Lags" align="Left" />
+    <text text="~lag-info" align="Right" />
   </horizontal>
   <horizontal>
-    <text text="Shutter frequency" align="Left" />
-    <text text="~shutter-frequency" align="Right" />
+    <text text="Dropped frames" align="Left" />
+    <text text="~dropped-frame-info" align="Right" />
   </horizontal>
   <horizontal>
-    <text text="GC-over-budget frequency" align="Left" />
-    <text text="~gc-over-budget-frequency" align="Right" />
+    <text text="GC time" align="Left" />
+    <text text="~gc-time-info" align="Right" />
   </horizontal>
   <horizontal>
-    <text text="GC budget utilization" align="Left" />
-    <text text="~gc-percent-of-budget" align="Right" />
+    <text text="Incomplete GC" align="Left" />
+    <text text="~incomplete-gc-info" align="Right" />
   </horizontal>
   <!-- pref-height should be set here, otherwise it's super high somehow -->
   <horizontal pref-height="10">

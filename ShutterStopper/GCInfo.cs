@@ -26,20 +26,20 @@ namespace ShutterStopper
         public static string GetDotNetDescription()
         {
             var sb = new StringBuilder();
-            sb.Append(GCSettings.IsServerGC ? "Server" : "Workstation").Append(" GC, ");
-            sb.Append($"Generations: 0..{GC.MaxGeneration}, ");
-            sb.Append($"Generation counts: {GetGCCounts()}, ");
+            sb.Append(GCSettings.IsServerGC ? "Server" : "Workstation").Append(" GC: ");
+            sb.Append($"Generations: {GC.MaxGeneration} ({GetGCCounts()}), ");
             sb.Append($"Latency mode: {GCSettings.LatencyMode}, ");
-            sb.Append($"LOH compaction mode: {GCSettings.LargeObjectHeapCompactionMode}, ");
+            sb.Append($"LOH compaction mode: {GCSettings.LargeObjectHeapCompactionMode}");
             return sb.ToString();
         }
 
         public static string GetUnityDescription()
         {
             var sb = new StringBuilder();
+            sb.Append($"Unity GC: {(GarbageCollector.isIncremental ? "Incremental" : "Non-incremental")} & {GarbageCollector.GCMode}, ");
+            sb.Append($"GC budget: {GarbageCollector.incrementalTimeSliceNanoseconds}ns, ");
             sb.Append($"vSync count: {QualitySettings.vSyncCount}, ");
-            sb.Append($"Target FPS: {Application.targetFrameRate}, ");
-            sb.Append($"Incremental GC: {GarbageCollector.isIncremental}, {GarbageCollector.incrementalTimeSliceNanoseconds}ns");
+            sb.Append($"Target FPS: {Application.targetFrameRate}");
             return sb.ToString();
         }
     }

@@ -15,7 +15,6 @@ namespace ShutterStopper
         public void Init(Logger log)
         {
             Log = log;
-            Log?.Debug("Initialized.");
         }
 
         [OnStart]

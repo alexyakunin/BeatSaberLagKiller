@@ -48,23 +48,24 @@ namespace ShutterStopper.Controllers
         [UIValue("max-gc-budget")]
         public float MaxGCBudget => Settings.MaxGCBudget; 
 
-        [UIValue("lag-frequency")]
-        public string LagFrequency => (GCManager.LagFrequency * 60).ToString("F3") + " / min";
+        [UIValue("lag-info")]
+        public string LagInfo => $"{GCManager.LagRatio:P} ({GCManager.LagFrequency * 60:F3} / min)";
 
-        [UIValue("shutter-frequency")]
-        public string ShutterFrequency => GCManager.ShutterFrequency.ToString("F3") + " / sec";
+        [UIValue("dropped-frame-info")]
+        public string DroppedFrameInfo => GCManager.DroppedFrameRatio.ToString("P");
 
-        [UIValue("gc-over-budget-frequency")]
-        public string GCOverBudgetFrequency => (GCManager.GCOverBudgetFrequency * 60).ToString("F3") + " / min";
+        [UIValue("gc-time-info")]
+        public string GCTimeInfo => GCManager.GCTimeRatio.ToString("P");
 
-        [UIValue("gc-percent-of-budget")]
-        public string GCTimeToBudgetPercent => GCManager.GCTimeToBudgetRatio.ToString("P");
+        [UIValue("incomplete-gc-info")]
+        public string IncompleteGCInfo => GCManager.GCIncompleteRatio.ToString("P");
 
         [UIAction("recommended")]
         private void ApplyRecommendedSettings()
         {
             IsEnabled = true;
             GCBudget = 2f;
+            Refresh();
         }
 
         [UIAction("off")]
@@ -72,6 +73,7 @@ namespace ShutterStopper.Controllers
         {
             IsEnabled = false;
             GCBudget = 2f;
+            Refresh();
         }
 
         [UIAction("reset-statistics")]
@@ -95,6 +97,7 @@ namespace ShutterStopper.Controllers
             var bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly;
             foreach (var p in GetType().GetProperties(bindingFlags))
                 NotifyPropertyChanged(p.Name);
+            parserParams.EmitEvent("cancel");
         }
 
         private void Awake()

@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,9 +8,9 @@ namespace ShutterStopper
 {
     public class GCManager : PersistentSingleton<GCManager>
     {
-        public static readonly float ApplyGCModePeriod = 5f; // in seconds
-        public static readonly float ShutterDuration = 1f/70; // in seconds
-        public static readonly float LagDuration = 1f/10; // in seconds
+        public static readonly float ApplyGCModePeriod = 30f; // in seconds
+        public static readonly float MaxFrameDuration = 1f/70; // in seconds
+        public static readonly float LagDuration = 1f/20; // in seconds
 
         private static IPA.Logging.Logger Log => Plugin.Log;
         private Stopwatch Stopwatch { get; }
@@ -18,21 +19,21 @@ namespace ShutterStopper
         public float? GCBudget { get; private set; }
 
         public double GameTime { get; private set; }
-        public int ShutterCount { get; private set; }
+        public long FrameCount { get; private set; }
+        public int DroppedFrameCount { get; private set; }
         public int LagCount { get; private set; }
-        public int GCOverBudgetCount { get; private set; }
+        public int GCIncompleteCount { get; private set; }
         public double GCTime { get; private set; }
-        public double MaxGCTime { get; private set; }
         
-        public double ShutterFrequency => ShutterCount / GameTime;
+        public double DroppedFrameRatio => DroppedFrameCount / (double) FrameCount;
+        public double LagRatio => LagCount / (double) FrameCount;
         public double LagFrequency => LagCount / GameTime;
-        public double GCOverBudgetFrequency => GCOverBudgetCount / GameTime;
-        public double GCTimeToBudgetRatio => GCTime / MaxGCTime;
+        public double GCIncompleteRatio => GCIncompleteCount / (double) FrameCount;
+        public double GCTimeRatio => GCTime / GameTime;
 
         public GCManager()
         {
             Stopwatch = new Stopwatch();
-            Stopwatch.Start();
             GarbageCollector.GCModeChanged += GCModeChanged;
             SceneManager.activeSceneChanged += ActiveSceneChanged;
             Settings.Instance.Changed += SettingsChanged;
@@ -43,34 +44,40 @@ namespace ShutterStopper
         public void ResetStatistics()
         {
             Log?.Debug("Reset statistics.");
+            Log?.Debug(GCInfo.GetUnityDescription());
+            FrameCount = 1;
             GameTime = 0.001f;
-            ShutterCount = 0;
+            DroppedFrameCount = 0;
             LagCount = 0;
-            GCOverBudgetCount = 0;
+            GCIncompleteCount = 0;
             GCTime = 0f;
-            MaxGCTime = GameTime;
         }
 
         private void Update()
         {
             var timeDelta = Time.deltaTime;
             if (IsInGameCore) {
+                FrameCount++;
                 GameTime += timeDelta;
+                var gcBudget = GCBudget.GetValueOrDefault();
                 if (timeDelta > LagDuration) {
                     Log?.Debug($"Lag: {timeDelta*1000:F2}ns");
                     LagCount++;
+                    DroppedFrameCount++;
                 }
-                else if (timeDelta > ShutterDuration)
-                    ShutterCount++;
-                else if (GCBudget.HasValue) {
-                    var gcBudget = (ulong) (GCBudget.GetValueOrDefault() * 1000_000);
-                    var gcStart = Stopwatch.Elapsed;
-                    GarbageCollector.CollectIncremental(gcBudget);
-                    var gcTimeDelta = (Stopwatch.Elapsed - gcStart).TotalMilliseconds;
-                    GCTime += gcTimeDelta;
-                    MaxGCTime += gcBudget;
-                    if (gcTimeDelta > gcBudget)
-                        GCOverBudgetCount++;
+                else if (timeDelta > MaxFrameDuration)
+                    DroppedFrameCount++;
+                else if (gcBudget > 0) {
+                    var isIncomplete = false;
+                    Stopwatch.Restart();
+                    if (GarbageCollector.isIncremental)
+                        isIncomplete = GarbageCollector.CollectIncremental((ulong) (gcBudget * 1000_000));
+                    else
+                        GC.Collect(0, GCCollectionMode.Optimized, true, true);
+                    Stopwatch.Stop();
+                    if (isIncomplete)
+                        GCIncompleteCount++;
+                    GCTime += Stopwatch.Elapsed.TotalSeconds;
                 }
             }
             
@@ -84,13 +91,13 @@ namespace ShutterStopper
         private void ActiveSceneChanged(Scene prevScene, Scene nextScene)
         {
             IsInGameCore = nextScene.name == "GameCore";
-            ApplyGCModeTimer = ShutterDuration;
+            ApplyGCModeTimer = MaxFrameDuration;
             Log?.Debug($"Scene changed to: {nextScene.name}");
         }
 
         private void GCModeChanged(GarbageCollector.Mode mode)
         {
-            ApplyGCModeTimer = ShutterDuration;
+            ApplyGCModeTimer = MaxFrameDuration;
             Log?.Debug($"GC mode changed.");
         }
 
@@ -106,14 +113,14 @@ namespace ShutterStopper
                 Log?.Debug($"GarbageCollector.GCMode: {GarbageCollector.GCMode} -> {gcMode}");
                 GarbageCollector.GCMode = gcMode;
             }
+            LogStatistics();
         }
 
         private void LogStatistics()
         {
-            Log?.Debug($"In game: {IsInGameCore}, GCBudget: {GCBudget}");
-            Log?.Debug($"Statistics: {GameTime}s playing -> " +
-                $"{LagCount} lags, {ShutterCount} shatters, " +
-                $"{GCOverBudgetCount} over-budget GCs, {GCTimeToBudgetRatio:P} in GC");
+            Log?.Debug($"Performance: " +
+                $"{LagRatio:P} lags, {DroppedFrameRatio:P} frames dropped, " +
+                $"{GCIncompleteRatio:P} incomplete GCs, {GCTimeRatio:P} time in GC");
         }
     }
 }
