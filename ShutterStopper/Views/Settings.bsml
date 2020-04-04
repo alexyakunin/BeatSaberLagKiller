@@ -1,0 +1,37 @@
+<scrollable-settings-container child-control-height='false' child-expand-height="false">
+  <horizontal>
+    <text text="Preset" align="Left" />
+    <horizontal align="Right">
+      <clickable-text text='Recommended' on-click='recommended'/>
+      <text text="|" />
+      <clickable-text text='Off' on-click='off'/>
+    </horizontal>
+  </horizontal>
+  <checkbox-setting text='Enable explicit GC' value='is-enabled' apply-on-change="true" />
+  <slider-setting text="GC budget, ms" value="gc-budget"
+                  min="~min-gc-budget" max="~max-gc-budget" apply-on-change="True" />
+  <horizontal>
+    <text text='Performance Statistics' font-size='5' align="Center"/>
+  </horizontal>
+  <horizontal>
+    <text text="Lag frequency" align="Left" />
+    <text text="~lag-frequency" align="Right" />
+  </horizontal>
+  <horizontal>
+    <text text="Shutter frequency" align="Left" />
+    <text text="~shutter-frequency" align="Right" />
+  </horizontal>
+  <horizontal>
+    <text text="GC-over-budget frequency" align="Left" />
+    <text text="~gc-over-budget-frequency" align="Right" />
+  </horizontal>
+  <horizontal>
+    <text text="GC budget utilization" align="Left" />
+    <text text="~gc-percent-of-budget" align="Right" />
+  </horizontal>
+  <!-- pref-height should be set here, otherwise it's super high somehow -->
+  <horizontal pref-height="10">
+    <button text='Reset Statistics' align="Center"
+            on-click='reset-statistics'/>
+  </horizontal>
+</scrollable-settings-container>
