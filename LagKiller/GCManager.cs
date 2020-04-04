@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Scripting;
 
-namespace ShutterStopper
+namespace LagKiller
 {
     public class GCManager : PersistentSingleton<GCManager>
     {

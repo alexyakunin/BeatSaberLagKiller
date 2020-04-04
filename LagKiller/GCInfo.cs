@@ -4,7 +4,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Scripting;
 
-namespace ShutterStopper
+namespace LagKiller
 {
     public static class GCInfo
     {

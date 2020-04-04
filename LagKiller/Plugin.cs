@@ -2,9 +2,9 @@
 using BeatSaberMarkupLanguage.Settings;
 using IPA;
 using IPA.Logging;
-using ShutterStopper.Controllers;
+using LagKiller.Controllers;
 
-namespace ShutterStopper
+namespace LagKiller
 {
     [Plugin(RuntimeOptions.SingleStartInit)]
     public class Plugin

@@ -5,12 +5,12 @@ using BeatSaberMarkupLanguage.Parser;
 using BS_Utils.Utilities;
 using UnityEngine;
 
-namespace ShutterStopper.Controllers
+namespace LagKiller.Controllers
 {
     public class SettingsController : NotifiableSingleton<SettingsController>
     {
-        public string ResourceName => "ShutterStopper.Views.Settings.bsml";
-        public string MenuItemTitle => "Shutter Stopper";
+        public string ResourceName => "LagKiller.Views.Settings.bsml";
+        public string MenuItemTitle => "Lag Killer";
 
         private static IPA.Logging.Logger Log => Plugin.Log;
         public Settings Settings => Settings.Instance; 

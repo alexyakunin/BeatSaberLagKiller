@@ -62,8 +62,8 @@
   </ItemGroup>
 
   <Target Name="CopyToPlugins" AfterTargets="AfterBuild">
-    <Copy SourceFiles="$(TargetDir)\ShutterStopper.dll" DestinationFolder="$(BeatSaberDir)\Plugins" ContinueOnError="true" />
-    <Copy SourceFiles="$(TargetDir)\ShutterStopper.dll" DestinationFolder="$(BeatSaberDir2)\Plugins" ContinueOnError="true" />
+    <Copy SourceFiles="$(TargetDir)\LagKiller.dll" DestinationFolder="$(BeatSaberDir)\Plugins" ContinueOnError="true" />
+    <Copy SourceFiles="$(TargetDir)\LagKiller.dll" DestinationFolder="$(BeatSaberDir2)\Plugins" ContinueOnError="true" />
   </Target>
 
 </Project>

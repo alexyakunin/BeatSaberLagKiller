@@ -2,7 +2,7 @@ using System;
 using BS_Utils.Utilities;
 using UnityEngine;
 
-namespace ShutterStopper
+namespace LagKiller
 {
     public class Settings
     {
@@ -12,7 +12,7 @@ namespace ShutterStopper
         public static readonly string MainSection = "Main";
         
         private readonly Lazy<Config> _configLazy = 
-            new Lazy<Config>(() => new Config("ShutterStopper"));
+            new Lazy<Config>(() => new Config("LagKiller"));
         
         private static IPA.Logging.Logger Log => Plugin.Log;
         private Config Config => _configLazy.Value;
