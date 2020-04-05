@@ -7,6 +7,7 @@ namespace LagKiller
     public class Settings
     {
         public static readonly Settings Instance = new Settings();
+        public static readonly float DefaultGCBudget = 1f;
         public static readonly float MinGCBudget = 0.25f; 
         public static readonly float MaxGCBudget = 10; 
         public static readonly float MinFps = 1; 
@@ -32,7 +33,7 @@ namespace LagKiller
         }
 
         public float GCBudget {
-            get => Mathf.Clamp(Config.GetFloat(MainSection, nameof(GCBudget), 2f), MinGCBudget, MaxGCBudget);
+            get => Mathf.Clamp(Config.GetFloat(MainSection, nameof(GCBudget), DefaultGCBudget), MinGCBudget, MaxGCBudget);
             set {
                 value = Mathf.Clamp(value, MinGCBudget, MaxGCBudget);
                 Config.SetFloat(MainSection, nameof(GCBudget), value);
@@ -42,7 +43,7 @@ namespace LagKiller
 
         public float FrameDropFpsBoundary {
             get => Mathf.Clamp(
-                Config.GetFloat(MainSection, nameof(FrameDropFpsBoundary), 70f), 
+                Config.GetFloat(MainSection, nameof(FrameDropFpsBoundary), 70), 
                 MinFps, MaxFps);
             set {
                 value = Mathf.Clamp(value, MinFps, MaxFps);
@@ -53,7 +54,7 @@ namespace LagKiller
 
         public float LagFpsBoundary {
             get => Mathf.Clamp(
-                Config.GetFloat(MainSection, nameof(LagFpsBoundary), 10f), 
+                Config.GetFloat(MainSection, nameof(LagFpsBoundary), 20), 
                 MinFps, MaxFps);
             set {
                 value = Mathf.Clamp(value, MinFps, MaxFps);

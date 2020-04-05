@@ -1,10 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>default</LangVersion>
-    <AssemblyVersion>1.0.0</AssemblyVersion>
-    <FileVersion>1.0.8</FileVersion>
+    <AssemblyVersion>1.0.1</AssemblyVersion>
+    <FileVersion>$(AssemblyVersion)</FileVersion>
+    <InformationalVersion>$(AssemblyVersion)</InformationalVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -63,8 +64,8 @@
   </ItemGroup>
 
   <Target Name="CopyToPlugins" AfterTargets="AfterBuild">
-    <Copy SourceFiles="$(TargetDir)\LagKiller.dll" DestinationFolder="$(BeatSaberDir)\Plugins" ContinueOnError="true" />
-    <Copy SourceFiles="$(TargetDir)\LagKiller.dll" DestinationFolder="$(BeatSaberDir2)\Plugins" ContinueOnError="true" />
+    <Copy Condition="Exists('$(BeatSaberDir)')" SourceFiles="$(TargetDir)\LagKiller.dll" DestinationFolder="$(BeatSaberDir)\Plugins" ContinueOnError="false" />
+    <Copy Condition="Exists('$(BeatSaberDir2)')" SourceFiles="$(TargetDir)\LagKiller.dll" DestinationFolder="$(BeatSaberDir2)\Plugins" ContinueOnError="false" />
   </Target>
 
 </Project>

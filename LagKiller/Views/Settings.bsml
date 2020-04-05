@@ -9,8 +9,8 @@
   <horizontal>
     <text text="Preset" align="Left" />
     <horizontal align="Right">
-      <button text='Recommended' on-click='recommended'/>
-      <button text='Off' on-click='off'/>
+      <button text='Recommended' on-click='apply-recommended-settings'/>
+      <button text='Off' on-click='apply-off-settings'/>
     </horizontal>
   </horizontal>
 </settings-container>
