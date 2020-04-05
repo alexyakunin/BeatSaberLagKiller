@@ -1,37 +1,16 @@
-<scrollable-settings-container child-control-height='false' child-expand-height="false">
+<settings-container child-control-height='false' child-expand-height="false">
+  <horizontal pref-width="70">
+    <text text="Auto GC mode" align="Left" />
+    <text text="~gc-mode-info" align="Right" />
+  </horizontal>
+  <checkbox-setting text='Enable explicit GC cycle' value='is-enabled'/>
+  <slider-setting text="Explicit GC budget, ms/frame" value="gc-budget"
+                  min="~min-gc-budget" max="~max-gc-budget" increment="0.01"/>
   <horizontal>
     <text text="Preset" align="Left" />
     <horizontal align="Right">
-      <clickable-text text='Recommended' on-click='recommended'/>
-      <text text="|" />
-      <clickable-text text='Off' on-click='off'/>
+      <button text='Recommended' on-click='recommended'/>
+      <button text='Off' on-click='off'/>
     </horizontal>
   </horizontal>
-  <checkbox-setting text='Enable explicit GC' value='is-enabled' apply-on-change="true" />
-  <slider-setting text="GC budget, ms" value="gc-budget"
-                  min="~min-gc-budget" max="~max-gc-budget" apply-on-change="True" />
-  <horizontal>
-    <text text='Performance Statistics' font-size='5' align="Center"/>
-  </horizontal>
-  <horizontal>
-    <text text="Lags" align="Left" />
-    <text text="~lag-info" align="Right" />
-  </horizontal>
-  <horizontal>
-    <text text="Dropped frames" align="Left" />
-    <text text="~dropped-frame-info" align="Right" />
-  </horizontal>
-  <horizontal>
-    <text text="GC time" align="Left" />
-    <text text="~gc-time-info" align="Right" />
-  </horizontal>
-  <horizontal>
-    <text text="Incomplete GC" align="Left" />
-    <text text="~incomplete-gc-info" align="Right" />
-  </horizontal>
-  <!-- pref-height should be set here, otherwise it's super high somehow -->
-  <horizontal pref-height="10">
-    <button text='Reset Statistics' align="Center"
-            on-click='reset-statistics'/>
-  </horizontal>
-</scrollable-settings-container>
+</settings-container>

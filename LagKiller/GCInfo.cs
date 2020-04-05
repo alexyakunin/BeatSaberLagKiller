@@ -42,5 +42,13 @@ namespace LagKiller
             sb.Append($"Target FPS: {Application.targetFrameRate}");
             return sb.ToString();
         }
+
+        public static string GetSummary()
+        {
+            var incremental = GarbageCollector.isIncremental ? "Incremental" : "Non-incremental";
+            var enabled = GarbageCollector.GCMode;
+            var budgetMs = GarbageCollector.incrementalTimeSliceNanoseconds / 1_000_000.0;
+            return $"{incremental} & {enabled}, budget {budgetMs:F3}ms";
+        }
     }
 }

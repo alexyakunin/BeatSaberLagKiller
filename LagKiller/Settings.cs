@@ -8,7 +8,11 @@ namespace LagKiller
     {
         public static readonly Settings Instance = new Settings();
         public static readonly float MinGCBudget = 0.25f; 
-        public static readonly float MaxGCBudget = 10f; 
+        public static readonly float MaxGCBudget = 10; 
+        public static readonly float MinFps = 1; 
+        public static readonly float MaxFps = 1000; 
+        public static readonly float MinDuration = 0.01f; 
+        public static readonly float MaxDuration = 3600 * 24 * 366; 
         public static readonly string MainSection = "Main";
         
         private readonly Lazy<Config> _configLazy = 
@@ -32,6 +36,50 @@ namespace LagKiller
             set {
                 value = Mathf.Clamp(value, MinGCBudget, MaxGCBudget);
                 Config.SetFloat(MainSection, nameof(GCBudget), value);
+                OnChanged();
+            }
+        }
+
+        public float FrameDropFpsBoundary {
+            get => Mathf.Clamp(
+                Config.GetFloat(MainSection, nameof(FrameDropFpsBoundary), 70f), 
+                MinFps, MaxFps);
+            set {
+                value = Mathf.Clamp(value, MinFps, MaxFps);
+                Config.SetFloat(MainSection, nameof(FrameDropFpsBoundary), value);
+                OnChanged();
+            }
+        }
+
+        public float LagFpsBoundary {
+            get => Mathf.Clamp(
+                Config.GetFloat(MainSection, nameof(LagFpsBoundary), 10f), 
+                MinFps, MaxFps);
+            set {
+                value = Mathf.Clamp(value, MinFps, MaxFps);
+                Config.SetFloat(MainSection, nameof(LagFpsBoundary), value);
+                OnChanged();
+            }
+        }
+
+        public float ApplyGCModePeriod {
+            get => Mathf.Clamp(
+                Config.GetFloat(MainSection, nameof(ApplyGCModePeriod), 30), 
+                MinDuration, MaxDuration);
+            set {
+                value = Mathf.Clamp(value, MinDuration, MinDuration);
+                Config.SetFloat(MainSection, nameof(ApplyGCModePeriod), value);
+                OnChanged();
+            }
+        }
+
+        public float GameStartupDuration {
+            get => Mathf.Clamp(
+                Config.GetFloat(MainSection, nameof(GameStartupDuration), 1), 
+                MinDuration, MaxDuration);
+            set {
+                value = Mathf.Clamp(value, MinDuration, MinDuration);
+                Config.SetFloat(MainSection, nameof(GameStartupDuration), value);
                 OnChanged();
             }
         }

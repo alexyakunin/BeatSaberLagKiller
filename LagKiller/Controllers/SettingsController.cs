@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.Parser;
@@ -14,7 +15,6 @@ namespace LagKiller.Controllers
 
         private static IPA.Logging.Logger Log => Plugin.Log;
         public Settings Settings => Settings.Instance; 
-        public GCManager GCManager => GCManager.instance;
 
         [UIParams]
 #pragma warning disable 414
@@ -23,12 +23,15 @@ namespace LagKiller.Controllers
 
         private bool _isEnabled;
         private float _gcBudget;
+        private bool _ignoreCancel = false;
 
         [UIValue("is-enabled")]
         public bool IsEnabled {
             get => _isEnabled;
             set {
                 _isEnabled = value;
+                if (_isEnabled != Settings.IsEnabled)
+                    _isEnabled = Settings.IsEnabled = _isEnabled;
                 NotifyPropertyChanged();
             }
         }
@@ -37,9 +40,9 @@ namespace LagKiller.Controllers
         public float GCBudget {
             get => _gcBudget;
             set {
-                value = Mathf.Round(value * 10) / 10f;
-                value = Mathf.Clamp(value, MinGCBudget, MaxGCBudget);
                 _gcBudget = value;
+                if (_gcBudget != Settings.GCBudget)
+                    _gcBudget = Settings.GCBudget = _gcBudget;
                 NotifyPropertyChanged();
             }
         }
@@ -48,23 +51,14 @@ namespace LagKiller.Controllers
         [UIValue("max-gc-budget")]
         public float MaxGCBudget => Settings.MaxGCBudget; 
 
-        [UIValue("lag-info")]
-        public string LagInfo => $"{GCManager.LagRatio:P} ({GCManager.LagFrequency * 60:F3} / min)";
-
-        [UIValue("dropped-frame-info")]
-        public string DroppedFrameInfo => GCManager.DroppedFrameRatio.ToString("P");
-
-        [UIValue("gc-time-info")]
-        public string GCTimeInfo => GCManager.GCTimeRatio.ToString("P");
-
-        [UIValue("incomplete-gc-info")]
-        public string IncompleteGCInfo => GCManager.GCIncompleteRatio.ToString("P");
+        [UIValue("gc-mode-info")]
+        public string GCModeInfo => GCInfo.GetSummary();
 
         [UIAction("recommended")]
         private void ApplyRecommendedSettings()
         {
             IsEnabled = true;
-            GCBudget = 2f;
+            GCBudget = 2;
             Refresh();
         }
 
@@ -72,40 +66,33 @@ namespace LagKiller.Controllers
         private void ApplyTurnedOffSettings()
         {
             IsEnabled = false;
-            GCBudget = 2f;
+            GCBudget = 2;
             Refresh();
         }
 
-        [UIAction("reset-statistics")]
-        private void ResetStatistics()
+        [UIAction("#cancel")]
+        private void Cancel()
         {
-            GCManager.ResetStatistics();
-            NotifyPropertyChanged();
+            if (_ignoreCancel) {
+                _ignoreCancel = false;
+                return;
+            }
+            IsEnabled = Settings.IsEnabled;
+            GCBudget = Settings.GCBudget;
+            this.NotifyChanged();
         }
 
-        [UIAction("#apply")]
-        private void Apply()
+        private void Refresh(bool reset = false)
         {
-            Log?.Debug("Settings: Apply");
-            Settings.IsEnabled = IsEnabled;
-            Settings.GCBudget = GCBudget;
-        }
-
-        private void Refresh()
-        {
-            Log?.Debug("Settings: Refresh");
-            var bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly;
-            foreach (var p in GetType().GetProperties(bindingFlags))
-                NotifyPropertyChanged(p.Name);
+            _ignoreCancel = !reset;
             parserParams.EmitEvent("cancel");
         }
 
         private void Awake()
         {
-            Log?.Debug($"Settings: Awake");
-            IsEnabled = Settings.IsEnabled;
-            GCBudget = Settings.GCBudget;
-            BSEvents.menuSceneActive += Refresh;
+            Log?.Debug($"{GetType().Name}: Awake");
+            Cancel();
+            BSEvents.menuSceneActive += Cancel;
         }
     }
 }
