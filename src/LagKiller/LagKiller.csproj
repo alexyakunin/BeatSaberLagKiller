@@ -68,4 +68,18 @@
     <Copy Condition="Exists('$(BeatSaberDir2)')" SourceFiles="$(TargetDir)\LagKiller.dll" DestinationFolder="$(BeatSaberDir2)\Plugins" ContinueOnError="false" />
   </Target>
 
+  <Target Name="BuildReleaseZip" DependsOnTargets="Build">
+    <PropertyGroup>
+      <ReleaseDir Condition="'$(ReleaseDir)'==''">$(TargetDir)</ReleaseDir>
+      <ReleaseTmpDir>$(TargetDir)</ReleaseTmpDir>
+      <StringDate>$([System.DateTime]::Now.ToString('yyyyMMdd'))</StringDate>
+      <ReleaseZipPath>$(ReleaseDir)\LagKiller_$(FileVersion).zip</ReleaseZipPath>
+    </PropertyGroup>
+    <MakeDir Directories="$(ReleaseTmpDir)\Plugins"/>
+    <Copy SourceFiles="$(TargetDir)\LagKiller.dll" DestinationFolder="$(ReleaseTmpDir)\Plugins" ContinueOnError="false" />
+    <Delete Files="$(ReleaseZipPath)" ContinueOnError="true"/>
+    <Exec Command="PowerShell -command Compress-Archive $(ReleaseTmpDir)\Plugins $(ReleaseZipPath) -CompressionLevel Optimal" />
+    <RemoveDir Directories="$(ReleaseTmpDir)\Plugins"/>
+  </Target>
+  
 </Project>

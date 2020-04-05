@@ -7,6 +7,6 @@ The plugin does a fairly simple job: it invokes `GarbageCollector.CollectIncreme
 In addition, LagKiller adds performance statistics page, where it detects two kinds of issues:
 - Dropped frames: basically, every frame taking > 1/70s is considered dropped
 - Lags: every frame that takes > 1/10s
-These settings are configurable via `UserData/LagKiller.json` ("FrameDropFpsBoundary", "LagFpsBoundary" - see [Settings.cs](https://github.com/alexyakunin/BeatSaberLagKiller/blob/master/LagKiller/Settings.cs)).
+These settings are configurable via `UserData/LagKiller.json` ("FrameDropFpsBoundary", "LagFpsBoundary" - see [Settings.cs](https://github.com/alexyakunin/BeatSaberLagKiller/blob/master/src/LagKiller/Settings.cs)).
 
 Moreover, it logs all the lags immediately, so if you launch Beat Saber with `--verbose` switch, you'll be able to see when exactly they happen. Note that you also need to set `ShowDebug` to `true` in `UserData/Beat Saber IPA.json`; see [this document](https://github.com/beat-saber-modding-group/BeatSaber-IPA-Reloaded/wiki/Developing#Debugging) for details.

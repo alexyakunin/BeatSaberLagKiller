@@ -17,16 +17,8 @@ csx/
 .so
 .dylib
 
-# Test binary, build with `go test -c`
-[Tt]est[Rr]esult*
-.test
-
-# Output of the go coverage tool, specifically when used with LiteIDE
-.out
-
-# Package folders
-packages/
-node_modules/
-
 # Log files & folders
 .log
+
+# Releases folder
+/src/Releases/
