@@ -19,6 +19,3 @@ csx/
 
 # Log files & folders
 .log
-
-# Releases folder
-/src/Releases/
