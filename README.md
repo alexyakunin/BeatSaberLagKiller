@@ -1,4 +1,4 @@
-# BeatSaberLagKiller
+# LagKiller plugin for Beat Saber
 
 It's a rewritten [TheTrashMan](https://github.com/monkeymanboy/BeatSaberTrashMan): the original plugin by some reason assumes .NET garbage collection settings also work in Unity, but they don't. Unity relies on its own incremental GC implementation, *which still can be tuned*.
 
