@@ -68,7 +68,7 @@ namespace LagKiller
                 Config.GetFloat(MainSection, nameof(ApplyGCModePeriod), 30), 
                 MinDuration, MaxDuration);
             set {
-                value = Mathf.Clamp(value, MinDuration, MinDuration);
+                value = Mathf.Clamp(value, MinDuration, MaxDuration);
                 Config.SetFloat(MainSection, nameof(ApplyGCModePeriod), value);
                 OnChanged();
             }
@@ -79,12 +79,16 @@ namespace LagKiller
                 Config.GetFloat(MainSection, nameof(GameStartupDuration), 1), 
                 MinDuration, MaxDuration);
             set {
-                value = Mathf.Clamp(value, MinDuration, MinDuration);
+                value = Mathf.Clamp(value, MinDuration, MaxDuration);
                 Config.SetFloat(MainSection, nameof(GameStartupDuration), value);
                 OnChanged();
             }
         }
 
-        private void OnChanged() => Changed?.Invoke(this);
+        private void OnChanged()
+        {
+            Log?.Debug($"Settings changed. Key settings: IsEnabled={IsEnabled}, GCBudget={GCBudget}ms");
+            Changed?.Invoke(this);
+        }
     }
 }

@@ -3,9 +3,11 @@
     <text text="Auto GC mode" align="Left" />
     <text text="~gc-mode-info" align="Right" />
   </horizontal>
-  <checkbox-setting text='Enable explicit GC cycle' value='is-enabled'/>
+  <checkbox-setting text='Enable explicit GC cycle' value='is-enabled'
+                    apply-on-change="true"/>
   <slider-setting text="Explicit GC budget, ms/frame" value="gc-budget"
-                  min="~min-gc-budget" max="~max-gc-budget" increment="0.01"/>
+                  min="~min-gc-budget" max="~max-gc-budget" increment="0.01"
+                  apply-on-change="true"/>
   <horizontal>
     <text text="Preset" align="Left" />
     <horizontal align="Right">

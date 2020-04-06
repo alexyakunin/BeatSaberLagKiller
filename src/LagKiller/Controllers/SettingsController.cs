@@ -23,8 +23,7 @@ namespace LagKiller.Controllers
         public bool IsEnabled {
             get => _isEnabled;
             set {
-                Settings.IsEnabled = value;
-                _isEnabled = Settings.IsEnabled;
+                _isEnabled = value;
                 NotifyPropertyChanged();
             }
         }
@@ -33,8 +32,7 @@ namespace LagKiller.Controllers
         public float GCBudget {
             get => _gcBudget;
             set {
-                Settings.GCBudget = value;
-                _gcBudget = Settings.GCBudget;
+                _gcBudget = value;
                 NotifyPropertyChanged();
             }
         }
@@ -49,17 +47,25 @@ namespace LagKiller.Controllers
         [UIAction("apply-recommended-settings")]
         private void ApplyRecommendedSettings()
         {
-            _isEnabled = true;
-            _gcBudget = Settings.DefaultGCBudget;
+            IsEnabled = true;
+            GCBudget = Settings.DefaultGCBudget;
             Refresh();
         }
 
         [UIAction("apply-off-settings")]
         private void ApplyTurnedOffSettings()
         {
-            _isEnabled = false;
-            _gcBudget = Settings.DefaultGCBudget;
+            IsEnabled = false;
+            GCBudget = Settings.DefaultGCBudget;
             Refresh();
+        }
+
+        [UIAction("#apply")]
+        private void Apply()
+        {
+            Settings.IsEnabled = IsEnabled;
+            Settings.GCBudget = GCBudget;
+            Cancel(); // To copy possibly clamped values back
         }
 
         [UIAction("#cancel")]
