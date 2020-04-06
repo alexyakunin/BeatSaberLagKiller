@@ -19,3 +19,6 @@ In addition, LagKiller adds performance statistics page, where it detects two ki
 These settings are configurable via `UserData/LagKiller.json` ("FrameDropFpsBoundary", "LagFpsBoundary" - see [Settings.cs](https://github.com/alexyakunin/BeatSaberLagKiller/blob/master/src/LagKiller/Settings.cs)).
 
 And finally, all the lags are logged. If you launch Beat Saber with `--verbose` switch, you'll be able to see when exactly they happen. Note that you also need to set `ShowDebug` to `true` in `UserData/Beat Saber IPA.json`; see [this document](https://github.com/beat-saber-modding-group/BeatSaber-IPA-Reloaded/wiki/Developing#Debugging) for details.
+
+![LagKiller Log Output](https://github.com/alexyakunin/BeatSaberLagKiller/raw/master/images/LagKiller-Log.jpg)
+
