@@ -1,0 +1,7 @@
+Description:
+
+A rewritten "TheTrashMan" that takes into account Unity-specific incremental GC mode. It manually triggers incremental GC with the specified budget, + tracks frame drop/lag statistics.
+
+Dependencies:
+
+BeatSaberMarkupLanguage@1.2.2,BS Utils@1.4.4
