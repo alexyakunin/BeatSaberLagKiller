@@ -4,11 +4,11 @@
   "description": [
     "#![LagKiller.Resources.description.md]"
   ],
-  "gameVersion": "1.8.0",
+  "gameVersion": "1.9.0",
   "icon": "LagKiller.Resources.icon.png",
   "id": "LagKiller",
   "name": "LagKiller",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "dependsOn": {
     "BS Utils": "^1.4.0",
     "BeatSaberMarkupLanguage": "^1.1.1"
@@ -16,8 +16,7 @@
   "features": [
   ],
   "links": {
-    "project-home": "https://github.com/alexyakunin/BeatSaberShutterStopper",
-    "project-source": "https://github.com/alexyakunin/BeatSaberShutterStopper/tree/master/BeatSaberShutterStopper",
-    "donate": "https://ko-fi.com/monkeymanboy"
+    "project-home": "https://github.com/alexyakunin/BeatSaberLagKiller",
+    "project-source": "https://github.com/alexyakunin/BeatSaberLagKiller/tree/master/BeatSaberShutterStopper"
   }
 }
