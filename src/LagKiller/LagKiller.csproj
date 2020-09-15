@@ -3,9 +3,17 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>default</LangVersion>
-    <AssemblyVersion>1.0.3</AssemblyVersion>
+    <AssemblyVersion>1.0.4</AssemblyVersion>
     <FileVersion>$(AssemblyVersion)</FileVersion>
     <InformationalVersion>$(AssemblyVersion)</InformationalVersion>
+    <BeatSaberDir>D:\Oculus\Software\hyperbolic-magnetism-beat-saber</BeatSaberDir>
+    <BeatSaberDir2>D:\Oculus\Software\hyperbolic-magnetism-beat-saber</BeatSaberDir2>
+    <Version>1.0.4</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningsAsErrors>NU1605</WarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
@@ -75,11 +83,11 @@
       <StringDate>$([System.DateTime]::Now.ToString('yyyyMMdd'))</StringDate>
       <ReleaseZipPath>$(ReleaseDir)\LagKiller_$(FileVersion).zip</ReleaseZipPath>
     </PropertyGroup>
-    <MakeDir Directories="$(ReleaseTmpDir)\Plugins"/>
+    <MakeDir Directories="$(ReleaseTmpDir)\Plugins" />
     <Copy SourceFiles="$(TargetDir)\LagKiller.dll" DestinationFolder="$(ReleaseTmpDir)\Plugins" ContinueOnError="false" />
-    <Delete Files="$(ReleaseZipPath)" ContinueOnError="true"/>
+    <Delete Files="$(ReleaseZipPath)" ContinueOnError="true" />
     <Exec Command="PowerShell -command Compress-Archive $(ReleaseTmpDir)\Plugins $(ReleaseZipPath) -CompressionLevel Optimal" />
-    <RemoveDir Directories="$(ReleaseTmpDir)\Plugins"/>
+    <RemoveDir Directories="$(ReleaseTmpDir)\Plugins" />
   </Target>
   
 </Project>
