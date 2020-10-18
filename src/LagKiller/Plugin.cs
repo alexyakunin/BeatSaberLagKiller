@@ -1,7 +1,10 @@
-﻿using BeatSaberMarkupLanguage.Settings;
+﻿using BeatSaberMarkupLanguage;
+using BeatSaberMarkupLanguage.Settings;
+using BS_Utils.Utilities;
 using IPA;
 using IPA.Logging;
 using LagKiller.Controllers;
+using Logger = IPA.Logging.Logger;
 
 namespace LagKiller
 {
@@ -16,9 +19,15 @@ namespace LagKiller
         [OnStart]
         public void OnStart()
         {
-            var settings = SettingsController.instance;
+            BSEvents.earlyMenuSceneLoadedFresh += this.BSEvents_earlyMenuSceneLoadedFresh;
+        }
+
+        private void BSEvents_earlyMenuSceneLoadedFresh(ScenesTransitionSetupDataSO obj)
+        {
+            var settings = BeatSaberUI.CreateViewController<SettingsController>();
             BSMLSettings.instance.AddSettingsMenu(settings.MenuItemTitle, settings.ResourceName, settings);
-            var statistics = StatisticsController.instance;
+
+            var statistics = BeatSaberUI.CreateViewController<StatisticsController>();
             BSMLSettings.instance.AddSettingsMenu(statistics.MenuItemTitle, statistics.ResourceName, statistics);
             GCManager.TouchInstance();
         }

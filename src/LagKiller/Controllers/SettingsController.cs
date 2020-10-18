@@ -1,16 +1,16 @@
 ﻿using BeatSaberMarkupLanguage.Attributes;
-using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.Parser;
+using BeatSaberMarkupLanguage.ViewControllers;
 using BS_Utils.Utilities;
 
 namespace LagKiller.Controllers
 {
-    public class SettingsController : NotifiableSingleton<SettingsController>
+    public class SettingsController : BSMLAutomaticViewController
     {
         public string ResourceName => "LagKiller.Views.Settings.bsml";
         public string MenuItemTitle => "Lag Killer";
 
-        private static IPA.Logging.Logger Log => Plugin.Log;
+        private static IPA.Logging.Logger Logger => Plugin.Log;
         private Settings Settings => Settings.Instance; 
 
         [UIParams]
@@ -75,7 +75,7 @@ namespace LagKiller.Controllers
                 IsEnabled = Settings.IsEnabled;
                 GCBudget = Settings.GCBudget;
             }
-            this.NotifyChanged((me, name) => me.NotifyPropertyChanged(name));
+            this.NotifyPropertyChanged();
         }
 
         private void Refresh(bool reset = false)
@@ -86,9 +86,13 @@ namespace LagKiller.Controllers
 
         private void Awake()
         {
-            Log?.Debug($"{GetType().Name}: Awake");
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+            Logger?.Debug($"{GetType().Name}: Awake");
             Cancel();
             BSEvents.menuSceneActive += Cancel;
         }
+
+        public static SettingsController instance { get; private set; }
     }
 }

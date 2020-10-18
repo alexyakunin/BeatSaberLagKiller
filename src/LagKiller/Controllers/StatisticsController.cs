@@ -1,17 +1,20 @@
 ﻿using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.Parser;
+using BeatSaberMarkupLanguage.ViewControllers;
 using BS_Utils.Utilities;
 
 namespace LagKiller.Controllers
 {
-    public class StatisticsController : NotifiableSingleton<StatisticsController>
+    public class StatisticsController : BSMLAutomaticViewController
     {
         public string ResourceName => "LagKiller.Views.Statistics.bsml";
         public string MenuItemTitle => "Perf. Statistics";
 
-        private static IPA.Logging.Logger Log => Plugin.Log;
+        private static IPA.Logging.Logger Logger => Plugin.Log;
         private GCManager GCManager => GCManager.instance;
+
+        public static StatisticsController instance { get; private set; }
 
         [UIParams]
         private BSMLParserParams parserParams = null;
@@ -46,7 +49,7 @@ namespace LagKiller.Controllers
         [UIAction("#cancel")]
         private void Cancel()
         {
-            this.NotifyChanged((me, name) => me.NotifyPropertyChanged(name));
+            this.NotifyPropertyChanged();
         }
 
         private void Refresh(bool reset = false)
@@ -56,7 +59,9 @@ namespace LagKiller.Controllers
 
         private void Awake()
         {
-            Log?.Debug($"{GetType().Name}: Awake");
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+            Logger?.Debug($"{GetType().Name}: Awake");
             Cancel();
             BSEvents.menuSceneActive += Cancel;
         }

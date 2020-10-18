@@ -1,6 +1,6 @@
 using System;
+using System.ComponentModel;
 using System.Reflection;
-using BeatSaberMarkupLanguage.Notify;
 
 namespace LagKiller
 {
@@ -10,7 +10,7 @@ namespace LagKiller
             this T host,
             Action<T, string> propertyChangedNotifier,
             BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public)
-            where T : INotifiableHost
+            where T : INotifyPropertyChanged
         {
             foreach (var p in host.GetType().GetProperties(bindingFlags))
                 propertyChangedNotifier(host, p.Name);
