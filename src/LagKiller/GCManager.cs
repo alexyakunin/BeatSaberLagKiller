@@ -3,6 +3,7 @@ using System.Diagnostics;
 using BeatSaberMarkupLanguage;
 using BeatSaberMarkupLanguage.Settings;
 using BS_Utils.Utilities;
+using LagKiller.Configuration;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Scripting;
@@ -40,14 +41,13 @@ namespace LagKiller
 
         public GCManager()
         {
-            SettingsChanged(Settings.Instance);
             ResetStatistics();
             GarbageCollector.GCModeChanged += GCModeChanged;
             SceneManager.activeSceneChanged += ActiveSceneChanged;
-            Settings.Instance.Changed += SettingsChanged;
+            PluginConfig.Instance.OnChangedEvent += SettingsChanged;
         }
 
-        private void SettingsChanged(Settings settings)
+        private void SettingsChanged(PluginConfig settings)
         {
             GCBudget = settings.IsEnabled ? (float?) settings.GCBudget : null;
             FrameDropDuration = 1 / settings.FrameDropFpsBoundary;

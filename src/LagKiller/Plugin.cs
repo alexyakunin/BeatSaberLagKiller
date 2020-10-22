@@ -2,19 +2,32 @@
 using BeatSaberMarkupLanguage.Settings;
 using BS_Utils.Utilities;
 using IPA;
+using IPA.Config.Stores;
 using IPA.Logging;
-using LagKiller.Controllers;
-using Logger = IPA.Logging.Logger;
+using LagKiller.Views;
+using IPALogger = IPA.Logging.Logger;
 
 namespace LagKiller
 {
     [Plugin(RuntimeOptions.SingleStartInit)]
     public class Plugin
     {
-        public static Logger Log { get; set; }
+        internal static Plugin instance { get; private set; }
+        internal static string Name => "LagKiller";
+        public static IPALogger Log { get; set; }
 
+        #region BSIPA Config
+        //Uncomment to use BSIPA's config
         [Init]
-        public void Init(Logger log) => Log = log;
+        public void InitWithConfig(IPALogger logger, IPA.Config.Config conf)
+        {
+            instance = this;
+            Log = logger;
+            Log.Debug("Logger initialized.");
+            Configuration.PluginConfig.Instance = conf.Generated<Configuration.PluginConfig>();
+            Log.Debug("Config loaded");
+        }
+        #endregion
 
         [OnStart]
         public void OnStart()
@@ -24,10 +37,10 @@ namespace LagKiller
 
         private void BSEvents_earlyMenuSceneLoadedFresh(ScenesTransitionSetupDataSO obj)
         {
-            var settings = BeatSaberUI.CreateViewController<SettingsController>();
+            var settings = BeatSaberUI.CreateViewController<SettingsViewController>();
             BSMLSettings.instance.AddSettingsMenu(settings.MenuItemTitle, settings.ResourceName, settings);
 
-            var statistics = BeatSaberUI.CreateViewController<StatisticsController>();
+            var statistics = BeatSaberUI.CreateViewController<StatisticsViewController>();
             BSMLSettings.instance.AddSettingsMenu(statistics.MenuItemTitle, statistics.ResourceName, statistics);
             GCManager.TouchInstance();
         }

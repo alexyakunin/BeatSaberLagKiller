@@ -4,20 +4,18 @@ using BeatSaberMarkupLanguage.Parser;
 using BeatSaberMarkupLanguage.ViewControllers;
 using BS_Utils.Utilities;
 
-namespace LagKiller.Controllers
+namespace LagKiller.Views
 {
-    public class StatisticsController : BSMLAutomaticViewController
+    [HotReload]
+    public class StatisticsViewController : BSMLAutomaticViewController
     {
-        public string ResourceName => "LagKiller.Views.Statistics.bsml";
+        public string ResourceName => "LagKiller.Views.StatisticsView.bsml";
         public string MenuItemTitle => "Perf. Statistics";
 
         private static IPA.Logging.Logger Logger => Plugin.Log;
         private GCManager GCManager => GCManager.instance;
 
-        public static StatisticsController instance { get; private set; }
-
-        [UIParams]
-        private BSMLParserParams parserParams = null;
+        public static StatisticsViewController instance { get; private set; }
 
         [UIValue("play-time-info")]
         public string PlayTimeInfo 
@@ -43,18 +41,6 @@ namespace LagKiller.Controllers
         private void ResetStatistics()
         {
             GCManager.ResetStatistics();
-            Refresh();
-        }
-
-        [UIAction("#cancel")]
-        private void Cancel()
-        {
-            this.NotifyPropertyChanged();
-        }
-
-        private void Refresh(bool reset = false)
-        {
-            parserParams.EmitEvent("cancel");
         }
 
         private void Awake()
@@ -62,8 +48,6 @@ namespace LagKiller.Controllers
             instance = this;
             DontDestroyOnLoad(this.gameObject);
             Logger?.Debug($"{GetType().Name}: Awake");
-            Cancel();
-            BSEvents.menuSceneActive += Cancel;
         }
     }
 }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -61,12 +61,12 @@
 
   <ItemGroup>
     <None Remove="Resources\description.md" />
+    <None Remove="Views\SettingsView.bsml" />
     <EmbeddedResource Include="Resources\description.md" />
     <None Remove="Resources\icon.png" />
     <EmbeddedResource Include="Resources\icon.png" />
-    <None Remove="Views\settings.bsml" />
-    <EmbeddedResource Include="Views\Statistics.bsml" />
-    <EmbeddedResource Include="Views\Settings.bsml" />
+    <EmbeddedResource Include="Views\StatisticsView.bsml" />
+    <EmbeddedResource Include="Views\SettingsView.bsml" />
     <None Remove="manifest.json" />
     <EmbeddedResource Include="manifest.json" />
   </ItemGroup>
