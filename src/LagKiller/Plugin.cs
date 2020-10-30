@@ -34,14 +34,16 @@ namespace LagKiller
         {
             BSEvents.earlyMenuSceneLoadedFresh += this.BSEvents_earlyMenuSceneLoadedFresh;
         }
+        [OnExit]
+        public void OnExit()
+        {
+            BSEvents.earlyMenuSceneLoadedFresh -= this.BSEvents_earlyMenuSceneLoadedFresh;
+        }
 
         private void BSEvents_earlyMenuSceneLoadedFresh(ScenesTransitionSetupDataSO obj)
         {
-            var settings = BeatSaberUI.CreateViewController<SettingsViewController>();
-            BSMLSettings.instance.AddSettingsMenu(settings.MenuItemTitle, settings.ResourceName, settings);
-
-            var statistics = BeatSaberUI.CreateViewController<StatisticsViewController>();
-            BSMLSettings.instance.AddSettingsMenu(statistics.MenuItemTitle, statistics.ResourceName, statistics);
+            BSMLSettings.instance.AddSettingsMenu(SettingsViewController.instance.MenuItemTitle, SettingsViewController.instance.ResourceName, SettingsViewController.instance);
+            BSMLSettings.instance.AddSettingsMenu(StatisticsViewController.instance.MenuItemTitle, StatisticsViewController.instance.ResourceName, StatisticsViewController.instance);
             GCManager.TouchInstance();
         }
     }

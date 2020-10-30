@@ -16,14 +16,12 @@ namespace LagKiller
 
         private Stopwatch GCStopwatch { get; set; }
         private float ApplyGCModeTimer { get; set; }
-
         public bool IsInGameCore { get; private set; }
         public float? GCBudget { get; private set; }
         public float FrameDropDuration { get; private set; }
         public float LagDuration { get; private set; }
         public float ApplyGCModePeriod { get; private set; }
         public float GameStartupDuration { get; private set; }
-
         public double PlayTime { get; private set; }
         public double GameTime { get; private set; }
         public long FrameCount { get; private set; }
@@ -31,7 +29,6 @@ namespace LagKiller
         public int LagCount { get; private set; }
         public int GCIncompleteCount { get; private set; }
         public double GCTime { get; private set; }
-        
         public double DroppedFrameRatio => DroppedFrameCount / (double) FrameCount;
         public double DroppedFrameFrequency => DroppedFrameCount / PlayTime;
         public double LagRatio => LagCount / (double) FrameCount;
@@ -44,6 +41,7 @@ namespace LagKiller
             ResetStatistics();
             GarbageCollector.GCModeChanged += GCModeChanged;
             SceneManager.activeSceneChanged += ActiveSceneChanged;
+            SettingsChanged(PluginConfig.Instance);
             PluginConfig.Instance.OnChangedEvent += SettingsChanged;
         }
 

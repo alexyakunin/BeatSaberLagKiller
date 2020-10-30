@@ -12,7 +12,7 @@ using UnityEngine.UI;
 namespace LagKiller.Views
 {
     [HotReload]
-    public class SettingsViewController : BSMLAutomaticViewController
+    public class SettingsViewController : PersistentSingleton<SettingsViewController>
     {
         public string MenuItemTitle => "Lag Killer";
 
@@ -43,7 +43,7 @@ namespace LagKiller.Views
         private void ApplyRecommendedSettings()
         {
             try {
-                (_toggle as CurvedTextMeshPro).GetComponentsInParent<ToggleSetting>(true).First().toggle.isOn = true;
+                (_toggleChild as CurvedTextMeshPro).GetComponentsInParent<ToggleSetting>(true).First().toggle.isOn = true;
                 _sliderSetting.slider.value = PluginConfig.DefaultGCBudget;
             }
             catch (System.Exception e) {
@@ -55,7 +55,7 @@ namespace LagKiller.Views
         private void ApplyTurnedOffSettings()
         {
             try {
-                (_toggle as CurvedTextMeshPro).GetComponentsInParent<ToggleSetting>(true).First().toggle.isOn = false;
+                (_toggleChild as CurvedTextMeshPro).GetComponentsInParent<ToggleSetting>(true).First().toggle.isOn = false;
                 _sliderSetting.slider.value = PluginConfig.DefaultGCBudget;
             }
             catch (System.Exception e) {
@@ -64,7 +64,9 @@ namespace LagKiller.Views
         }
 
         [UIComponent("enable-gc")]
-        public object _toggle;
+        public object _toggleChild;
+
+
         [UIComponent("budget")]
         public GenericSliderSetting _sliderSetting;
 

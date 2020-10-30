@@ -7,15 +7,13 @@ using BS_Utils.Utilities;
 namespace LagKiller.Views
 {
     [HotReload]
-    public class StatisticsViewController : BSMLAutomaticViewController
+    public class StatisticsViewController : PersistentSingleton<StatisticsViewController>
     {
         public string ResourceName => "LagKiller.Views.StatisticsView.bsml";
         public string MenuItemTitle => "Perf. Statistics";
 
         private static IPA.Logging.Logger Logger => Plugin.Log;
         private GCManager GCManager => GCManager.instance;
-
-        public static StatisticsViewController instance { get; private set; }
 
         [UIValue("play-time-info")]
         public string PlayTimeInfo 
@@ -45,7 +43,6 @@ namespace LagKiller.Views
 
         private void Awake()
         {
-            instance = this;
             DontDestroyOnLoad(this.gameObject);
             Logger?.Debug($"{GetType().Name}: Awake");
         }
