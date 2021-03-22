@@ -20,28 +20,28 @@ namespace LagKiller.Views
 
         [UIValue("play-time-info")]
         public string PlayTimeInfo
-            => $"{GCManager.PlayTime / 60:F3} min";
+            => $"{this.GCManager.PlayTime / 60:F3} min";
 
         [UIValue("lag-info")]
         public string LagInfo
-            => $"{GCManager.LagRatio:P} ({GCManager.LagFrequency * 60:F3} / min)";
+            => $"{this.GCManager.LagRatio:P} ({this.GCManager.LagFrequency * 60:F3} / min)";
 
         [UIValue("dropped-frame-info")]
         public string DroppedFrameInfo
-            => $"{GCManager.DroppedFrameRatio:P} ({GCManager.DroppedFrameFrequency * 60:F3} / min)";
+            => $"{this.GCManager.DroppedFrameRatio:P} ({this.GCManager.DroppedFrameFrequency * 60:F3} / min)";
 
         [UIValue("gc-time-info")]
         public string GCTimeInfo
-            => GCManager.GCTimeRatio.ToString("P");
+            => this.GCManager.GCTimeRatio.ToString("P");
 
         [UIValue("incomplete-gc-info")]
         public string IncompleteGCInfo
-            => GCManager.GCIncompleteRatio.ToString("P");
+            => this.GCManager.GCIncompleteRatio.ToString("P");
 
         [UIAction("reset-statistics")]
         private void ResetStatistics()
         {
-            GCManager.ResetStatistics();
+            this.GCManager.ResetStatistics();
             this.UpdateUI();
         }
 
@@ -54,7 +54,7 @@ namespace LagKiller.Views
 
         private void Awake()
         {
-            Logger?.Debug($"{GetType().Name}: Awake");
+            Logger?.Debug($"{this.GetType().Name}: Awake");
             _timer.Elapsed += this.TimerElapsed;
             _timer.Start();
         }
@@ -80,7 +80,7 @@ namespace LagKiller.Views
             }
         }
 
-        void UpdateUI()
+        private void UpdateUI()
         {
             while (SceneManager.GetActiveScene().name == "GameCore") {
                 Thread.Sleep(500);
@@ -92,9 +92,6 @@ namespace LagKiller.Views
             this.NotyfyPropertyChanged(nameof(this.IncompleteGCInfo));
         }
 
-        private void NotyfyPropertyChanged([CallerMemberName] string member = null)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(member));
-        }
+        private void NotyfyPropertyChanged([CallerMemberName] string member = null) => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(member));
     }
 }

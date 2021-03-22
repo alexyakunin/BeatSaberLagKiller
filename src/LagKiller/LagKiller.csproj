@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>default</LangVersion>
-    <AssemblyVersion>2.0.2</AssemblyVersion>
-    <FileVersion>2.0.2</FileVersion>
+    <AssemblyVersion>2.0.3</AssemblyVersion>
+    <FileVersion>2.0.3</FileVersion>
     <InformationalVersion>$(AssemblyVersion)</InformationalVersion>
     <BeatSaberDir>D:\Oculus\Software\hyperbolic-magnetism-beat-saber</BeatSaberDir>
     <BeatSaberDir2>D:\Oculus\Software\hyperbolic-magnetism-beat-saber</BeatSaberDir2>
@@ -35,6 +35,9 @@
     </Reference>
     <Reference Include="Main">
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Main.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>..\..\..\Voiceroid2Sharp\Voiceroid2Sherp\bin\x86\Release\netcoreapp3.1\System.Windows.Forms.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\UnityEngine.dll</HintPath>

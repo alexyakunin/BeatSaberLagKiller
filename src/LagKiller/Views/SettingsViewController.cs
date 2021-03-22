@@ -1,13 +1,8 @@
 ﻿using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Components.Settings;
-using BeatSaberMarkupLanguage.Parser;
-using BeatSaberMarkupLanguage.ViewControllers;
-using BS_Utils.Utilities;
 using HMUI;
 using LagKiller.Configuration;
 using System.Linq;
-using UnityEngine;
-using UnityEngine.UI;
 
 namespace LagKiller.Views
 {
@@ -21,20 +16,22 @@ namespace LagKiller.Views
         private static IPA.Logging.Logger Logger => Plugin.Log;
 
         [UIValue("is-enabled")]
-        public bool IsEnabled {
+        public bool IsEnabled
+        {
             get => PluginConfig.Instance.IsEnabled;
             set => PluginConfig.Instance.IsEnabled = value;
         }
 
         [UIValue("gc-budget")]
-        public float GCBudget {
+        public float GCBudget
+        {
             get => PluginConfig.Instance.GCBudget;
             set => PluginConfig.Instance.GCBudget = value;
         }
         [UIValue("min-gc-budget")]
-        public float MinGCBudget => PluginConfig.MinGCBudget; 
+        public float MinGCBudget => PluginConfig.MinGCBudget;
         [UIValue("max-gc-budget")]
-        public float MaxGCBudget => PluginConfig.MaxGCBudget; 
+        public float MaxGCBudget => PluginConfig.MaxGCBudget;
 
         [UIValue("gc-mode-info")]
         public string GCModeInfo => GCInfo.GetSummary();
@@ -43,8 +40,8 @@ namespace LagKiller.Views
         private void ApplyRecommendedSettings()
         {
             try {
-                (_toggleChild as CurvedTextMeshPro).GetComponentsInParent<ToggleSetting>(true).First().toggle.isOn = true;
-                _sliderSetting.slider.value = PluginConfig.DefaultGCBudget;
+                (this._toggleChild as CurvedTextMeshPro).GetComponentsInParent<ToggleSetting>(true).First().toggle.isOn = true;
+                this._sliderSetting.slider.value = PluginConfig.DefaultGCBudget;
             }
             catch (System.Exception e) {
                 Plugin.Log.Error(e);
@@ -55,8 +52,8 @@ namespace LagKiller.Views
         private void ApplyTurnedOffSettings()
         {
             try {
-                (_toggleChild as CurvedTextMeshPro).GetComponentsInParent<ToggleSetting>(true).First().toggle.isOn = false;
-                _sliderSetting.slider.value = PluginConfig.DefaultGCBudget;
+                (this._toggleChild as CurvedTextMeshPro).GetComponentsInParent<ToggleSetting>(true).First().toggle.isOn = false;
+                this._sliderSetting.slider.value = PluginConfig.DefaultGCBudget;
             }
             catch (System.Exception e) {
                 Plugin.Log.Error(e);
@@ -73,7 +70,7 @@ namespace LagKiller.Views
         private void Awake()
         {
             DontDestroyOnLoad(this.gameObject);
-            Logger?.Debug($"{GetType().Name}: Awake");
+            Logger?.Debug($"{this.GetType().Name}: Awake");
         }
     }
 }
