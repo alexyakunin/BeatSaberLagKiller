@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>default</LangVersion>
-    <AssemblyVersion>2.0.3</AssemblyVersion>
-    <FileVersion>2.0.3</FileVersion>
+    <AssemblyVersion>2.0.4</AssemblyVersion>
+    <FileVersion>2.0.4</FileVersion>
     <InformationalVersion>$(AssemblyVersion)</InformationalVersion>
     <BeatSaberDir>D:\Oculus\Software\hyperbolic-magnetism-beat-saber</BeatSaberDir>
     <BeatSaberDir2>D:\Oculus\Software\hyperbolic-magnetism-beat-saber</BeatSaberDir2>
