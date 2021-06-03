@@ -1,0 +1,29 @@
+<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
+  <settings-container child-control-height='false' child-expand-height="false">
+    <horizontal pref-width="70">
+      <text text="Play time" align="Left" />
+      <text text="~play-time-info" align="Right" />
+    </horizontal>
+    <horizontal>
+      <text text="Lags" align="Left" />
+      <text text="~lag-info" align="Right" />
+    </horizontal>
+    <horizontal>
+      <text text="Dropped frames" align="Left" />
+      <text text="~dropped-frame-info" align="Right" />
+    </horizontal>
+    <horizontal>
+      <text text="GC time" align="Left" />
+      <text text="~gc-time-info" align="Right" />
+    </horizontal>
+    <horizontal>
+      <text text="Incomplete GC" align="Left" />
+      <text text="~incomplete-gc-info" align="Right" />
+    </horizontal>
+    <!-- pref-height should be set here, otherwise it's super high somehow -->
+    <horizontal pref-height="10">
+      <button text='Reset' align="Center"
+              on-click='reset-statistics'/>
+    </horizontal>
+  </settings-container>
+</bg>

@@ -1,0 +1,18 @@
+<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
+  <settings-container child-control-height='false' child-expand-height="false">
+    <horizontal pref-width="70">
+      <text text="Auto GC mode" align="Left" />
+      <text text="~gc-mode-info" align="Right" />
+    </horizontal>
+    <checkbox-setting id ='enable-gc' text='Enable explicit GC cycle' value='is-enabled'/>
+    <slider-setting id='budget' text="Explicit GC budget, ms/frame" value="gc-budget" min="~min-gc-budget" max="~max-gc-budget" increment="0.01"/>
+    <horizontal>
+      <text text="Preset" align="Left" />
+      <horizontal>
+        <button text='Recommended' on-click='apply-recommended-settings'/>
+        <button text='Off' on-click='apply-off-settings'/>
+      </horizontal>
+    </horizontal>
+  </settings-container>
+</bg>
+

@@ -13,14 +13,14 @@ namespace LagKiller
         public static int GetCollectionCount(int generation)
             => generation < MaxGeneration ? GC.CollectionCount(generation) : 0;
 
-        public static (int, int, int) GetGCCounts() 
+        public static (int, int, int) GetGCCounts()
             => (GetCollectionCount(0), GetCollectionCount(1), GetCollectionCount(2));
 
         public static (int, int, int) GetGCCountDelta(
             (int, int, int) now,
             (int, int, int) earlier)
-            => (now.Item1 - earlier.Item1, 
-                now.Item2 - earlier.Item2, 
+            => (now.Item1 - earlier.Item1,
+                now.Item2 - earlier.Item2,
                 now.Item3 - earlier.Item3);
 
         public static string GetDotNetDescription()

@@ -1,11 +1,11 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <BeatSaberDir>C:\Program Files (x86)\Steam\steamapps\common\Beat Saber</BeatSaberDir>
-    <BeatSaberDir2>C:\Program Files\Oculus\Software\Software\hyperbolic-magnetism-beat-saber</BeatSaberDir2>
+    <BeatSaberDir>D:\Oculus\Software\Software\hyperbolic-magnetism-beat-saber</BeatSaberDir>
+    <BeatSaberDir2>D:\Oculus\Software\Software\hyperbolic-magnetism-beat-saber</BeatSaberDir2>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(COMPUTERNAME)'=='WHITEBOX'">
     <BeatSaberDir>D:\Oculus\Software\Software\hyperbolic-magnetism-beat-saber</BeatSaberDir>
-    <BeatSaberDir2>D:\Games\Steam\steamapps\common\Beat Saber</BeatSaberDir2>
+    <BeatSaberDir2>D:\Oculus\Software\Software\hyperbolic-magnetism-beat-saber</BeatSaberDir2>
   </PropertyGroup>
 </Project>
